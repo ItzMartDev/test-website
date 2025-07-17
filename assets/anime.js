@@ -35,6 +35,7 @@ async function carregarAnime() {
         descDiv.textContent = anime.descricao || '';
         sinopseDiv.textContent = anime.sinopse || '';
         epGrid.innerHTML = '';
+        epGrid.style.width = '100%';
         anime.episodios.forEach(ep => {
             const btn = document.createElement('button');
             btn.className = 'episodio-btn';
