@@ -14,7 +14,8 @@ async function carregarAnime() {
     const tipoDiv = document.getElementById('animeTipo');
     const epsDiv = document.getElementById('animeEpisodios');
     const descDiv = document.getElementById('animeDescricao');
-    const epList = document.getElementById('episodiosList');
+    const sinopseDiv = document.getElementById('animeSinopse');
+    const epGrid = document.getElementById('episodiosGrid');
     try {
         const res = await fetch('animes.json');
         if (!res.ok) throw new Error('Erro ao buscar animes.json');
@@ -32,15 +33,17 @@ async function carregarAnime() {
         tipoDiv.textContent = `Tipo: ${anime.episodios.length === 1 ? 'Filme' : 'Série'}`;
         epsDiv.textContent = `Episódios: ${anime.episodios.length}`;
         descDiv.textContent = anime.descricao || '';
-        epList.innerHTML = '';
+        sinopseDiv.textContent = anime.sinopse || '';
+        epGrid.innerHTML = '';
         anime.episodios.forEach(ep => {
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="#" data-ep="${ep.numero}">Episódio ${ep.numero}</a>`;
-            li.querySelector('a').addEventListener('click', function(e) {
-                e.preventDefault();
+            const btn = document.createElement('button');
+            btn.className = 'episodio-btn';
+            btn.textContent = `EP${ep.numero}`;
+            btn.setAttribute('data-ep', ep.numero);
+            btn.onclick = function() {
                 tocarEpisodio(ep.numero);
-            });
-            epList.appendChild(li);
+            };
+            epGrid.appendChild(btn);
         });
         tocarEpisodio(anime.episodios[0].numero);
     } catch (e) {
@@ -54,9 +57,9 @@ function tocarEpisodio(numEp) {
     const ep = animeGlobal.episodios.find(e => String(e.numero) === String(numEp));
     if (!ep) return;
     episodioAtual = ep;
-    document.querySelectorAll('#episodiosList a').forEach(a => {
-        a.classList.remove('active');
-        if (a.getAttribute('data-ep') == numEp) a.classList.add('active');
+    document.querySelectorAll('.episodio-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-ep') == numEp) btn.classList.add('active');
     });
     iniciarPlayer(ep.videos);
 }
