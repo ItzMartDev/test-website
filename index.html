@@ -5,22 +5,32 @@
     <title>Reprodutor Unificado de Vídeos Cortados</title>
     <style>
         body { background: #181818; color: #fff; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 20px; }
-        #container { 
-            width: 80vw; 
-            max-width: 900px; 
-            margin: 30px auto; 
+        #container {
+            width: 1280px;
+            height: 720px;
+            max-width: 100vw;
+            max-height: 56.25vw; /* 720/1280 = 0.5625 */
+            aspect-ratio: 16/9;
+            margin: 30px auto;
             position: relative;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        video { 
-            width: 100%; 
-            background: #000; 
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
             display: block;
+            margin: auto;
             cursor: pointer;
         }
-        
+
         /* Controles flutuantes */
         #floating-controls {
             position: absolute;
@@ -34,41 +44,41 @@
             z-index: 10;
             pointer-events: auto;
         }
-        
+
         #floating-controls.show {
             transform: translateY(0);
         }
-        
-        #progressbar { 
-            width: 100%; 
-            height: 6px; 
-            background: rgba(255,255,255,0.3); 
-            border-radius: 3px; 
-            margin-bottom: 15px; 
-            cursor: pointer; 
+
+        #progressbar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            margin-bottom: 15px;
+            cursor: pointer;
             position: relative;
         }
-        #progress { 
-            height: 100%; 
-            background: #4caf50; 
-            border-radius: 3px; 
-            width: 0; 
+        #progress {
+            height: 100%;
+            background: #4caf50;
+            border-radius: 3px;
+            width: 0;
             transition: width 0.1s ease;
         }
-        
+
         #controls-row {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         #left-controls {
             display: flex;
             align-items: center;
             gap: 5px;
             flex: 0 0 auto;
         }
-        
+
         #center-controls {
             display: flex;
             align-items: center;
@@ -76,14 +86,14 @@
             flex: 1 1 auto;
             justify-content: center;
         }
-        
+
         #right-controls {
             display: flex;
             align-items: center;
             gap: 5px;
             flex: 0 0 auto;
         }
-        
+
         .control-btn {
             padding: 8px 12px;
             font-size: 14px;
@@ -96,16 +106,16 @@
             backdrop-filter: blur(10px);
             user-select: none;
         }
-        
+
         .control-btn:hover {
             background: rgba(76,175,80,0.8);
             transform: scale(1.05);
         }
-        
+
         .control-btn:active {
             transform: scale(0.95);
         }
-        
+
         #playBtn {
             padding: 12px 16px;
             font-size: 16px;
@@ -116,23 +126,23 @@
             align-items: center;
             justify-content: center;
         }
-        
-        #time { 
-            font-size: 0.9em; 
+
+        #time {
+            font-size: 0.9em;
             min-width: 100px;
             text-align: center;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
-        
-        #volumeValue { 
-            min-width: 40px; 
-            display: inline-block; 
+
+        #volumeValue {
+            min-width: 40px;
+            display: inline-block;
             font-size: 0.9em;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
-        
-        #volumeSlider { 
-            width: 80px; 
+
+        #volumeSlider {
+            width: 80px;
             vertical-align: middle;
             -webkit-appearance: none;
             appearance: none;
@@ -141,7 +151,7 @@
             border-radius: 2px;
             cursor: pointer;
         }
-        
+
         #volumeSlider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -151,7 +161,7 @@
             border-radius: 50%;
             cursor: pointer;
         }
-        
+
         #volumeSlider::-moz-range-thumb {
             width: 16px;
             height: 16px;
@@ -160,38 +170,38 @@
             cursor: pointer;
             border: none;
         }
-        
-        #loading { 
-            display: none; 
-            color: #4caf50; 
-            font-size: 1.2em; 
-            margin: 20px 0; 
+
+        #loading {
+            display: none;
+            color: #4caf50;
+            font-size: 1.2em;
+            margin: 20px 0;
         }
-        
-        #error { 
-            display: none; 
-            color: #f44336; 
-            font-size: 1.1em; 
-            margin: 20px 0; 
+
+        #error {
+            display: none;
+            color: #f44336;
+            font-size: 1.1em;
+            margin: 20px 0;
         }
-        
+
         /* Controles normais (fora do fullscreen) */
         #normal-controls {
             margin: 20px auto;
-            max-width: 900px;
-            width: 80vw;
+            width: 1280px;
+            max-width: 100vw;
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         #normal-left-controls {
             display: flex;
             align-items: center;
             gap: 5px;
             flex: 0 0 auto;
         }
-        
+
         #normal-center-controls {
             display: flex;
             align-items: center;
@@ -199,56 +209,77 @@
             flex: 1 1 auto;
             justify-content: center;
         }
-        
+
         #normal-right-controls {
             display: flex;
             align-items: center;
             gap: 5px;
             flex: 0 0 auto;
         }
-        
+
         #normal-controls .control-btn {
             background: #333;
         }
-        
+
         #normal-controls .control-btn:hover {
             background: #4caf50;
         }
-        
+
         #progressbar-normal {
-            width: 80vw; 
-            max-width: 900px; 
-            height: 8px; 
-            background: #333; 
-            border-radius: 4px; 
-            margin: 15px auto; 
+            width: 1280px;
+            max-width: 100vw;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin: 15px auto;
             cursor: pointer;
         }
-        
+
         #progress-normal {
-            height: 100%; 
-            background: #4caf50; 
-            border-radius: 4px; 
-            width: 0; 
+            height: 100%;
+            background: #4caf50;
+            border-radius: 4px;
+            width: 0;
             transition: width 0.1s ease;
         }
-        
+
         /* Responsive */
+        @media (max-width: 1280px), (max-height: 720px) {
+            #container,
+            #normal-controls,
+            #progressbar-normal {
+                width: 100vw;
+                max-width: 100vw;
+            }
+            #container {
+                height: 56.25vw;
+                max-height: 100vh;
+            }
+        }
         @media (max-width: 600px) {
+            #container,
+            #normal-controls,
+            #progressbar-normal {
+                width: 100vw;
+            }
+            #container {
+                height: 56.25vw;
+                min-height: 200px;
+            }
             #controls-row {
                 flex-wrap: wrap;
                 gap: 10px;
             }
-            
+
             #left-controls, #right-controls {
                 gap: 3px;
             }
-            
+
             .control-btn {
                 padding: 6px 10px;
                 font-size: 12px;
             }
-            
+
             #volumeSlider {
                 width: 60px;
             }
@@ -259,7 +290,7 @@
     <h1>Reprodutor Unificado de Vídeos Cortados</h1>
     <div id="container">
         <video id="player" preload="auto" tabindex="0"></video>
-        
+
         <!-- Controles flutuantes (fullscreen) -->
         <div id="floating-controls">
             <div id="progressbar">
@@ -281,11 +312,11 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="loading">Carregando vídeos... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</div>
         <div id="error">Erro ao carregar vídeos! (｡•́︿•̀｡)</div>
     </div>
-    
+
     <!-- Controles normais (fora do fullscreen) -->
     <div id="normal-controls">
         <div id="normal-left-controls">
@@ -302,11 +333,11 @@
             <button class="control-btn" id="fullscreenBtnNormal" title="Tela cheia">⛶</button>
         </div>
     </div>
-    
+
     <div id="progressbar-normal">
         <div id="progress-normal"></div>
     </div>
-    
+
     <script>
     // Liste os nomes dos arquivos cortados aqui, na ordem correta
     const videos = [
@@ -316,7 +347,7 @@
         'fatias_video/4.mp4',
         'fatias_video/5.mp4'
     ];
-    
+
     let durations = Array(videos.length).fill(0);
     let totalDuration = 0;
     let current = 0;
@@ -325,7 +356,7 @@
     let isFullscreen = false;
     let isLoading = false;
     let playbackRate = 1;
-    
+
     // Elementos DOM
     const player = document.getElementById('player');
     const container = document.getElementById('container');
@@ -345,7 +376,7 @@
     const volumeValueNormal = document.getElementById('volumeValueNormal');
     const loading = document.getElementById('loading');
     const error = document.getElementById('error');
-    
+
     // Botões individuais
     const skipBackBtn = document.getElementById('skipBackBtn');
     const skipForwardBtn = document.getElementById('skipForwardBtn');
@@ -353,18 +384,18 @@
     const skipBackBtnNormal = document.getElementById('skipBackBtnNormal');
     const skipForwardBtnNormal = document.getElementById('skipForwardBtnNormal');
     const fullscreenBtnNormal = document.getElementById('fullscreenBtnNormal');
-    
+
     // Configurações iniciais
     player.volume = 1;
     let lastVolume = 1;
-    
+
     // Função para prevenir loops infinitos
     function safeSetCurrentTime(time) {
         if (isFinite(time) && time >= 0 && time <= player.duration) {
             player.currentTime = time;
         }
     }
-    
+
     // Função para atualizar volume
     function setPlayerVolume(val) {
         const v = Math.min(2, Math.max(0, val / 100));
@@ -373,20 +404,20 @@
         volumeValueNormal.textContent = Math.round(val) + '%';
         lastVolume = v;
     }
-    
+
     // Event listeners para volume
     volumeSlider.addEventListener('input', function(e) {
         e.stopPropagation();
         setPlayerVolume(this.value);
         volumeSliderNormal.value = this.value;
     });
-    
+
     volumeSliderNormal.addEventListener('input', function(e) {
         e.stopPropagation();
         setPlayerVolume(this.value);
         volumeSlider.value = this.value;
     });
-    
+
     // Controles de mouse para fullscreen
     function showControls() {
         if (isFullscreen) {
@@ -394,20 +425,20 @@
             container.style.cursor = 'default';
         }
     }
-    
+
     function hideControls() {
         if (isFullscreen) {
             floatingControls.classList.remove('show');
             container.style.cursor = 'none';
         }
     }
-    
+
     function resetMouseTimer() {
         clearTimeout(mouseTimer);
         showControls();
         mouseTimer = setTimeout(hideControls, 3000);
     }
-    
+
     // Event listeners para controles
     container.addEventListener('mouseenter', showControls);
     container.addEventListener('mousemove', resetMouseTimer);
@@ -415,16 +446,16 @@
         clearTimeout(mouseTimer);
         hideControls();
     });
-    
+
     // Função para pular tempo
     function skipTime(seconds) {
         if (isLoading) return;
-        
+
         let played = 0;
         for (let i = 0; i < current; i++) played += durations[i];
         let currentTime = played + (player.currentTime || 0);
         let newTime = Math.max(0, Math.min(totalDuration, currentTime + seconds));
-        
+
         let acc = 0;
         for (let i = 0; i < videos.length; i++) {
             if (newTime < acc + durations[i]) {
@@ -438,7 +469,7 @@
             acc += durations[i];
         }
     }
-    
+
     // Detecção de fullscreen
     function onFullscreenChange() {
         isFullscreen = !!document.fullscreenElement;
@@ -454,10 +485,10 @@
             clearTimeout(mouseTimer);
         }
     }
-    
+
     document.addEventListener('fullscreenchange', onFullscreenChange);
     document.addEventListener('webkitfullscreenchange', onFullscreenChange);
-    
+
     // Função para fullscreen
     function toggleFullscreen() {
         if (!document.fullscreenElement) {
@@ -474,7 +505,7 @@
             }
         }
     }
-    
+
     // Função para carregar durações
     function loadDurations(idx = 0) {
         if (idx >= videos.length) {
@@ -488,27 +519,27 @@
             }
             return;
         }
-        
+
         loading.style.display = 'block';
         loading.textContent = `Carregando vídeo ${idx + 1}/${videos.length}... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧`;
-        
+
         const temp = document.createElement('video');
         temp.preload = 'metadata';
         temp.src = videos[idx];
-        
+
         const timeoutId = setTimeout(() => {
             console.warn(`Timeout loading video ${idx + 1}: ${videos[idx]}`);
             durations[idx] = 0;
             loadDurations(idx + 1);
         }, 10000);
-        
+
         temp.addEventListener('loadedmetadata', function() {
             clearTimeout(timeoutId);
             durations[idx] = this.duration || 0;
             console.log(`Video ${idx + 1} loaded: ${this.duration}s`);
             loadDurations(idx + 1);
         });
-        
+
         temp.addEventListener('error', function() {
             clearTimeout(timeoutId);
             console.error(`Error loading video ${idx + 1}: ${videos[idx]}`);
@@ -516,23 +547,23 @@
             loadDurations(idx + 1);
         });
     }
-    
+
     // Função para carregar vídeo
     function loadVideo(idx, relTime = 0) {
         if (idx >= videos.length || idx < 0 || isLoading) return;
-        
+
         isLoading = true;
         current = idx;
         player.src = videos[idx];
-        
+
         const loadedHandler = function() {
             player.removeEventListener('loadeddata', loadedHandler);
             player.removeEventListener('canplay', loadedHandler);
-            
+
             if (relTime > 0) {
                 safeSetCurrentTime(Math.max(0, Math.min(relTime, player.duration)));
             }
-            
+
             if (isPlaying) {
                 player.play().catch(e => {
                     console.error('Play failed:', e);
@@ -540,43 +571,43 @@
                     updateTime();
                 });
             }
-            
+
             isLoading = false;
             updateTime();
         };
-        
+
         player.addEventListener('loadeddata', loadedHandler);
         player.addEventListener('canplay', loadedHandler);
-        
+
         player.addEventListener('error', function() {
             isLoading = false;
             console.error(`Error playing video ${idx + 1}: ${videos[idx]}`);
             error.style.display = 'block';
             error.textContent = `Erro ao reproduzir vídeo ${idx + 1}! (｡•́︿•̀｡)`;
         });
-        
+
         player.load();
     }
-    
+
     // Função para atualizar tempo
     function updateTime() {
         let played = 0;
         for (let i = 0; i < current; i++) played += durations[i];
         let currentTime = played + (player.currentTime || 0);
         let percent = totalDuration ? (currentTime / totalDuration) * 100 : 0;
-        
+
         progress.style.width = percent + '%';
         progressNormal.style.width = percent + '%';
-        
+
         const timeText = format(currentTime) + ' / ' + format(totalDuration);
         time.textContent = timeText;
         timeNormal.textContent = timeText;
-        
+
         const playText = isPlaying ? '⏸' : '▶';
         playBtn.textContent = playText;
         playBtnNormal.textContent = playText;
     }
-    
+
     // Função para formatar tempo
     function format(s) {
         s = Math.floor(s);
@@ -584,11 +615,11 @@
         const ss = s % 60;
         return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
     }
-    
+
     // Função para toggle play/pause
     function togglePlay() {
         if (isLoading) return;
-        
+
         if (isPlaying) {
             player.pause();
         } else {
@@ -599,17 +630,17 @@
             });
         }
     }
-    
+
     // Função para seek
     function seek(e) {
         if (totalDuration === 0 || isLoading) return;
-        
+
         e.stopPropagation();
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const percent = Math.max(0, Math.min(1, x / rect.width));
         const seekTime = percent * totalDuration;
-        
+
         let acc = 0;
         for (let i = 0; i < videos.length; i++) {
             if (seekTime < acc + durations[i]) {
@@ -619,21 +650,21 @@
             acc += durations[i];
         }
     }
-    
+
     // Event listeners para player
     player.addEventListener('play', function() {
         isPlaying = true;
         updateTime();
         error.style.display = 'none';
     });
-    
+
     player.addEventListener('pause', function() {
         isPlaying = false;
         updateTime();
     });
-    
+
     player.addEventListener('timeupdate', updateTime);
-    
+
 player.addEventListener('ended', function() {
     if (current < videos.length - 1) {
         isPlaying = true; // Garante que o próximo vídeo será reproduzido automaticamente
@@ -643,34 +674,34 @@ player.addEventListener('ended', function() {
         updateTime();
     }
 });
-    
+
     // Event listeners para clique no vídeo
     player.addEventListener('click', function(e) {
         e.stopPropagation();
         togglePlay();
     });
-    
+
     // Event listeners para botões
     playBtn.addEventListener('click', togglePlay);
     playBtnNormal.addEventListener('click', togglePlay);
-    
+
     skipBackBtn.addEventListener('click', () => skipTime(-5));
     skipBackBtnNormal.addEventListener('click', () => skipTime(-5));
-    
+
     skipForwardBtn.addEventListener('click', () => skipTime(5));
     skipForwardBtnNormal.addEventListener('click', () => skipTime(5));
-    
+
     fullscreenBtn.addEventListener('click', toggleFullscreen);
     fullscreenBtnNormal.addEventListener('click', toggleFullscreen);
-    
+
     // Event listeners para seek
     progressbar.addEventListener('click', seek);
     progressbarNormal.addEventListener('click', seek);
-    
+
     // Atalhos de teclado
     document.addEventListener('keydown', function(e) {
         if (e.target.tagName === 'INPUT') return;
-        
+
         switch(e.code) {
             case 'Space':
                 e.preventDefault();
@@ -704,7 +735,7 @@ player.addEventListener('ended', function() {
                 break;
         }
     });
-    
+
     // Inicialização
     setPlayerVolume(100);
     loadDurations();
