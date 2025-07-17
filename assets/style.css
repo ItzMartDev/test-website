@@ -1,0 +1,60 @@
+/* Reset básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #181818; color: #fff; font-family: Arial, sans-serif; min-height: 100vh; }
+header { background: #222; padding: 20px 0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+header h1 { font-size: 2.5em; letter-spacing: 2px; }
+header nav { margin-top: 10px; }
+header nav a { color: #4caf50; text-decoration: none; margin: 0 10px; font-weight: bold; }
+header nav a:hover { text-decoration: underline; }
+main { padding: 30px 10px 40px 10px; max-width: 1280px; margin: auto; }
+footer { background: #222; color: #aaa; text-align: center; padding: 18px 0; position: relative; bottom: 0; width: 100%; margin-top: 40px; }
+.animes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 30px; margin-top: 30px; }
+.anime-card { background: #232323; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; text-align: center; }
+.anime-card:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 6px 24px rgba(76,175,80,0.2); }
+.anime-card img { width: 100%; height: 260px; object-fit: cover; display: block; }
+.anime-card h3 { margin: 15px 0 10px 0; font-size: 1.2em; color: #4caf50; }
+#anime-details { display: flex; flex-direction: column; align-items: center; }
+#animeInfo { display: flex; align-items: center; gap: 30px; margin-bottom: 30px; }
+#animeInfo img { width: 220px; height: 320px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+#animeInfo .info { max-width: 500px; }
+#animeInfo h2 { font-size: 2em; color: #4caf50; margin-bottom: 10px; }
+#animeInfo p { color: #ccc; margin-bottom: 10px; }
+#episodiosList { list-style: none; width: 100%; max-width: 600px; margin: 0 auto; }
+#episodiosList li { background: #232323; margin-bottom: 12px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.15); transition: background 0.2s; }
+#episodiosList li a { display: block; padding: 16px 20px; color: #fff; text-decoration: none; font-size: 1.1em; }
+#episodiosList li a:hover { background: #4caf50; color: #181818; }
+#epInfo { text-align: center; margin-bottom: 20px; }
+#epInfo h2 { color: #4caf50; font-size: 1.5em; margin-bottom: 8px; }
+#epInfo p { color: #ccc; }
+/* Player CSS (copiado e adaptado do fornecido) */
+#container { width: 1280px; height: 720px; max-width: 100vw; max-height: 56.25vw; aspect-ratio: 16/9; margin: 30px auto; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.5); background: #000; display: flex; align-items: center; justify-content: center; }
+video { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; margin: auto; cursor: pointer; }
+#floating-controls { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px; transform: translateY(100%); transition: transform 0.3s ease; z-index: 10; pointer-events: auto; }
+#floating-controls.show { transform: translateY(0); }
+#progressbar { width: 100%; height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; margin-bottom: 15px; cursor: pointer; position: relative; }
+#progress { height: 100%; background: #4caf50; border-radius: 3px; width: 0; transition: width 0.1s ease; }
+#controls-row { display: flex; align-items: center; gap: 15px; }
+#left-controls { display: flex; align-items: center; gap: 5px; flex: 0 0 auto; }
+#center-controls { display: flex; align-items: center; gap: 10px; flex: 1 1 auto; justify-content: center; }
+#right-controls { display: flex; align-items: center; gap: 5px; flex: 0 0 auto; }
+.control-btn { padding: 8px 12px; font-size: 14px; border-radius: 4px; border: none; background: rgba(255,255,255,0.2); color: #fff; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(10px); user-select: none; }
+.control-btn:hover { background: rgba(76,175,80,0.8); transform: scale(1.05); }
+.control-btn:active { transform: scale(0.95); }
+#playBtn { padding: 12px 16px; font-size: 16px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+#time { font-size: 0.9em; min-width: 100px; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+#volumeValue { min-width: 40px; display: inline-block; font-size: 0.9em; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+#volumeSlider { width: 80px; vertical-align: middle; -webkit-appearance: none; appearance: none; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; cursor: pointer; }
+#volumeSlider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: #4caf50; border-radius: 50%; cursor: pointer; }
+#volumeSlider::-moz-range-thumb { width: 16px; height: 16px; background: #4caf50; border-radius: 50%; cursor: pointer; border: none; }
+#loading { display: none; color: #4caf50; font-size: 1.2em; margin: 20px 0; }
+#error { display: none; color: #f44336; font-size: 1.1em; margin: 20px 0; }
+#normal-controls { margin: 20px auto; width: 1280px; max-width: 100vw; display: flex; align-items: center; gap: 15px; }
+#normal-left-controls { display: flex; align-items: center; gap: 5px; flex: 0 0 auto; }
+#normal-center-controls { display: flex; align-items: center; gap: 10px; flex: 1 1 auto; justify-content: center; }
+#normal-right-controls { display: flex; align-items: center; gap: 5px; flex: 0 0 auto; }
+#normal-controls .control-btn { background: #333; }
+#normal-controls .control-btn:hover { background: #4caf50; }
+#progressbar-normal { width: 1280px; max-width: 100vw; height: 8px; background: #333; border-radius: 4px; margin: 15px auto; cursor: pointer; }
+#progress-normal { height: 100%; background: #4caf50; border-radius: 4px; width: 0; transition: width 0.1s ease; }
+@media (max-width: 1280px), (max-height: 720px) { #container, #normal-controls, #progressbar-normal { width: 100vw; max-width: 100vw; } #container { height: 56.25vw; max-height: 100vh; } }
+@media (max-width: 600px) { #container, #normal-controls, #progressbar-normal { width: 100vw; } #container { height: 56.25vw; min-height: 200px; } #controls-row { flex-wrap: wrap; gap: 10px; } #left-controls, #right-controls { gap: 3px; } .control-btn { padding: 6px 10px; font-size: 12px; } #volumeSlider { width: 60px; } } 

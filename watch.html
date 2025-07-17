@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Assistir Episódio - FantasyAnime</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">FantasyAnime</a></h1>
+    </header>
+    <main>
+        <section id="watch-section">
+            <div id="epInfo"></div>
+            <div id="container">
+                <video id="player" preload="auto" tabindex="0"></video>
+                <div id="floating-controls">
+                    <div id="progressbar"><div id="progress"></div></div>
+                    <div id="controls-row">
+                        <div id="left-controls">
+                            <button class="control-btn" id="skipBackBtn" title="Retroceder 5s">⏪</button>
+                            <button class="control-btn" id="playBtn">▶</button>
+                            <button class="control-btn" id="skipForwardBtn" title="Avançar 5s">⏩</button>
+                        </div>
+                        <div id="center-controls">
+                            <div id="time">00:00 / 00:00</div>
+                        </div>
+                        <div id="right-controls">
+                            <span id="volumeValue">100%</span>
+                            <input type="range" id="volumeSlider" min="0" max="200" value="100">
+                            <button class="control-btn" id="fullscreenBtn" title="Tela cheia">⛶</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="loading">Carregando vídeos... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</div>
+                <div id="error">Erro ao carregar vídeos! (｡•́︿•̀｡)</div>
+            </div>
+            <div id="normal-controls">
+                <div id="normal-left-controls">
+                    <button class="control-btn" id="skipBackBtnNormal" title="Retroceder 5s">⏪</button>
+                    <button class="control-btn" id="playBtnNormal">▶</button>
+                    <button class="control-btn" id="skipForwardBtnNormal" title="Avançar 5s">⏩</button>
+                </div>
+                <div id="normal-center-controls">
+                    <div id="timeNormal">00:00 / 00:00</div>
+                </div>
+                <div id="normal-right-controls">
+                    <span id="volumeValueNormal">100%</span>
+                    <input type="range" id="volumeSliderNormal" min="0" max="200" value="100">
+                    <button class="control-btn" id="fullscreenBtnNormal" title="Tela cheia">⛶</button>
+                </div>
+            </div>
+            <div id="progressbar-normal">
+                <div id="progress-normal"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados.</p>
+    </footer>
+    <script src="assets/watch.js"></script>
+</body>
+</html> 
