@@ -7,21 +7,35 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+    <div class="site-wrapper">
     <header>
         <h1>FantasyAnime</h1>
         <nav>
             <a href="index.html">Início</a>
+            <a href="quem-somos.html">Quem Somos</a>
         </nav>
     </header>
     <main>
+        <section id="search-section">
+            <input type="text" id="searchInput" placeholder="Buscar anime..." autocomplete="off">
+            <select id="filterTipo">
+                <option value="">Todos</option>
+                <option value="filme">Filme</option>
+                <option value="serie">Série</option>
+            </select>
+            <select id="filterAno">
+                <option value="">Ano</option>
+            </select>
+        </section>
         <section id="anime-list">
             <h2>Animes em Destaque</h2>
             <div class="animes-grid" id="animesGrid"></div>
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados.</p>
+        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados. | <a href="quem-somos.html">Quem Somos</a></p>
     </footer>
+    </div>
     <script src="assets/main.js"></script>
 </body>
 </html> 

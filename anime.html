@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+    <div class="site-wrapper">
     <header>
         <h1><a href="index.html">FantasyAnime</a></h1>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="quem-somos.html">Quem Somos</a>
+        </nav>
     </header>
     <main>
+        <button class="btn-voltar" onclick="window.location.href='index.html'">← Voltar para lista</button>
         <section id="anime-page">
             <div class="anime-layout">
                 <div class="anime-player-box">
@@ -66,8 +72,9 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados.</p>
+        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados. | <a href="quem-somos.html">Quem Somos</a></p>
     </footer>
+    </div>
     <script src="assets/anime.js"></script>
 </body>
 </html> 
