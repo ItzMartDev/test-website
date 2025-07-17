@@ -2,25 +2,34 @@ let animesOriginais = [];
 
 async function carregarAnimes() {
     const grid = document.getElementById('animesGrid');
+    const errorDiv = document.getElementById('animeError');
+    if (errorDiv) errorDiv.style.display = 'none';
     try {
         const res = await fetch('animes.json');
+        if (!res.ok) throw new Error('Erro ao buscar animes.json');
         const animes = await res.json();
         animesOriginais = animes;
         preencherFiltroAno(animes);
         renderizarAnimes(animes);
     } catch (e) {
-        grid.innerHTML = '<p>Erro ao carregar animes.</p>';
+        if (grid) grid.innerHTML = '';
+        if (errorDiv) {
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = 'Erro ao carregar animes.';
+        }
     }
 }
 
 function preencherFiltroAno(animes) {
     const select = document.getElementById('filterAno');
+    if (!select) return;
     const anos = Array.from(new Set(animes.map(a => a.ano))).filter(Boolean).sort((a, b) => b - a);
     select.innerHTML = '<option value="">Ano</option>' + anos.map(ano => `<option value="${ano}">${ano}</option>`).join('');
 }
 
 function renderizarAnimes(animes) {
     const grid = document.getElementById('animesGrid');
+    if (!grid) return;
     grid.innerHTML = '';
     if (!animes || !animes.length) {
         grid.innerHTML = '<p>Nenhum anime encontrado.</p>';
@@ -45,9 +54,9 @@ function renderizarAnimes(animes) {
 }
 
 function filtrarAnimes() {
-    const texto = document.getElementById('searchInput').value.toLowerCase();
-    const tipo = document.getElementById('filterTipo').value;
-    const ano = document.getElementById('filterAno').value;
+    const texto = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    const tipo = document.getElementById('filterTipo')?.value || '';
+    const ano = document.getElementById('filterAno')?.value || '';
     let filtrados = animesOriginais.filter(anime => {
         const nomeMatch = anime.nome && anime.nome.toLowerCase().includes(texto);
         const tipoMatch = !tipo || (tipo === 'filme' && anime.episodios.length === 1) || (tipo === 'serie' && anime.episodios.length > 1);
@@ -59,7 +68,7 @@ function filtrarAnimes() {
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarAnimes();
-    document.getElementById('searchInput').addEventListener('input', filtrarAnimes);
-    document.getElementById('filterTipo').addEventListener('change', filtrarAnimes);
-    document.getElementById('filterAno').addEventListener('change', filtrarAnimes);
+    document.getElementById('searchInput')?.addEventListener('input', filtrarAnimes);
+    document.getElementById('filterTipo')?.addEventListener('change', filtrarAnimes);
+    document.getElementById('filterAno')?.addEventListener('change', filtrarAnimes);
 }); 

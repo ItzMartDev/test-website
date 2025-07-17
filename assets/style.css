@@ -957,3 +957,15 @@ footer {
         max-width: 100vw;
     }
 }
+.anime-list-title-left {
+    text-align: left;
+    margin-left: 0;
+    margin-bottom: 12px;
+    margin-top: 18px;
+    color: #4caf50;
+    font-size: 2em;
+    font-weight: 800;
+    letter-spacing: 1px;
+    width: 100%;
+    padding-left: 8px;
+}
