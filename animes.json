@@ -18,5 +18,26 @@
         ]
       }
     ]
+  },
+  {
+    "id": 2,
+    "nome": "The Angel Next Door Spoils Me Rotten",
+    "ano": 2023,
+    "descricao": "Um romance leve entre um estudante comum e sua vizinha angelical, cheia de momentos fofos e emocionantes.",
+    "capa": "capa/2/capa.jpg",
+    "episodios": [
+      { "numero": 1, "titulo": "EP1", "videos": ["video/2/EP1/1.mp4"] },
+      { "numero": 2, "titulo": "EP2", "videos": ["video/2/EP2/1.mp4", "video/2/EP2/2.mp4"] },
+      { "numero": 3, "titulo": "EP3", "videos": ["video/2/EP3/1.mp4"] },
+      { "numero": 4, "titulo": "EP4", "videos": ["video/2/EP4/1.mp4"] },
+      { "numero": 5, "titulo": "EP5", "videos": ["video/2/EP5/1.mp4"] },
+      { "numero": 6, "titulo": "EP6", "videos": ["video/2/EP6/1.mp4"] },
+      { "numero": 7, "titulo": "EP7", "videos": ["video/2/EP7/1.mp4"] },
+      { "numero": 8, "titulo": "EP8", "videos": ["video/2/EP8/1.mp4"] },
+      { "numero": 9, "titulo": "EP9", "videos": ["video/2/EP9/1.mp4"] },
+      { "numero": 10, "titulo": "EP10", "videos": ["video/2/EP10/1.mp4"] },
+      { "numero": 11, "titulo": "EP11", "videos": ["video/2/EP11/1.mp4"] },
+      { "numero": 12, "titulo": "EP12", "videos": ["video/2/EP12/1.mp4", "video/2/EP12/2.mp4"] }
+    ]
   }
 ] 
