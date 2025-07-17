@@ -22,11 +22,12 @@ function preencherFiltroAno(animes) {
 function renderizarAnimes(animes) {
     const grid = document.getElementById('animesGrid');
     grid.innerHTML = '';
-    if (!animes.length) {
+    if (!animes || !animes.length) {
         grid.innerHTML = '<p>Nenhum anime encontrado.</p>';
         return;
     }
     animes.forEach(anime => {
+        if (!anime.nome || !anime.capa || !anime.episodios) return;
         const tipo = anime.episodios.length === 1 ? 'Filme' : 'Série';
         const card = document.createElement('div');
         card.className = 'anime-card';
@@ -48,7 +49,7 @@ function filtrarAnimes() {
     const tipo = document.getElementById('filterTipo').value;
     const ano = document.getElementById('filterAno').value;
     let filtrados = animesOriginais.filter(anime => {
-        const nomeMatch = anime.nome.toLowerCase().includes(texto);
+        const nomeMatch = anime.nome && anime.nome.toLowerCase().includes(texto);
         const tipoMatch = !tipo || (tipo === 'filme' && anime.episodios.length === 1) || (tipo === 'serie' && anime.episodios.length > 1);
         const anoMatch = !ano || String(anime.ano) === String(ano);
         return nomeMatch && tipoMatch && anoMatch;
