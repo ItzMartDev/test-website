@@ -2,7 +2,9 @@
   {
     "id": 1,
     "nome": "The Tunnel to Summer, the Exit of Goodbyes",
-    "capa": "capa/1/capa.jpg",
+    "ano": 2022,
+    "descricao": "Um túnel misterioso concede desejos, mas cobra um preço. Dois jovens arriscam tudo por amor e esperança.",
+    "capa": "capa/capa.jpg",
     "episodios": [
       {
         "numero": 1,
