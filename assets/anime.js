@@ -8,35 +8,34 @@ let episodioAtual = null;
 
 async function carregarAnime() {
     const id = getIdFromUrl();
-    const infoDiv = document.getElementById('animeInfo');
-    const epList = document.getElementById('episodiosList');
+    const capaImg = document.getElementById('animeCapa');
+    const nomeDiv = document.getElementById('animeNome');
+    const anoDiv = document.getElementById('animeAno');
+    const tipoDiv = document.getElementById('animeTipo');
+    const epsDiv = document.getElementById('animeEpisodios');
     const descDiv = document.getElementById('animeDescricao');
+    const epList = document.getElementById('episodiosList');
     try {
         const res = await fetch('animes.json');
         if (!res.ok) throw new Error('Erro ao buscar animes.json');
         const animes = await res.json();
         const anime = animes.find(a => String(a.id) === String(id));
         if (!anime) {
-            infoDiv.innerHTML = '<p>Anime não encontrado.</p>';
+            nomeDiv.innerHTML = '<p>Anime não encontrado.</p>';
             return;
         }
         animeGlobal = anime;
-        const tipo = anime.episodios.length === 1 ? 'Filme' : 'Série';
-        const numEps = anime.episodios.length;
-        infoDiv.innerHTML = `
-            <div style="display:flex;align-items:center;gap:32px;">
-                <img src="${anime.capa}" alt="Capa de ${anime.nome}" style="width:140px;height:200px;object-fit:cover;border-radius:10px;border:2px solid #4caf50;box-shadow:0 2px 10px #0003;">
-                <div class="info">
-                    <h2>${anime.nome} <span style='font-size:0.7em;color:#b2ffb2;font-weight:400;'>(${anime.ano || ''})</span></h2>
-                    <p><b>Tipo:</b> ${tipo} &nbsp; <b>Episódios:</b> ${numEps}</p>
-                </div>
-            </div>
-        `;
-        descDiv.innerHTML = `<p style='margin-top:18px;font-size:1.1em;color:#ccc;'>${anime.descricao || ''}</p>`;
+        capaImg.src = anime.capa;
+        capaImg.alt = `Capa de ${anime.nome}`;
+        nomeDiv.textContent = anime.nome;
+        anoDiv.textContent = `Ano: ${anime.ano || ''}`;
+        tipoDiv.textContent = `Tipo: ${anime.episodios.length === 1 ? 'Filme' : 'Série'}`;
+        epsDiv.textContent = `Episódios: ${anime.episodios.length}`;
+        descDiv.textContent = anime.descricao || '';
         epList.innerHTML = '';
         anime.episodios.forEach(ep => {
             const li = document.createElement('li');
-            li.innerHTML = `<a href="#" data-ep="${ep.numero}">Episódio ${ep.numero} - ${ep.titulo || ''}</a>`;
+            li.innerHTML = `<a href="#" data-ep="${ep.numero}">Episódio ${ep.numero}</a>`;
             li.querySelector('a').addEventListener('click', function(e) {
                 e.preventDefault();
                 tocarEpisodio(ep.numero);
@@ -45,7 +44,7 @@ async function carregarAnime() {
         });
         tocarEpisodio(anime.episodios[0].numero);
     } catch (e) {
-        infoDiv.innerHTML = '<p>Erro ao carregar anime.</p>';
+        nomeDiv.innerHTML = '<p>Erro ao carregar anime.</p>';
         console.error(e);
     }
 }

@@ -18,12 +18,18 @@
     <main>
         <button class="btn-voltar" onclick="window.location.href='index.html'">← Voltar para lista</button>
         <section id="anime-page">
-            <div class="anime-flex-layout">
-                <div class="anime-info-box">
-                    <div id="animeInfo"></div>
+            <div class="anime-flex-layout2">
+                <div class="anime-info-box2">
+                    <img id="animeCapa" src="" alt="Capa do Anime">
+                    <h2 id="animeNome"></h2>
+                    <div class="anime-meta2">
+                        <div id="animeAno"></div>
+                        <div id="animeTipo"></div>
+                        <div id="animeEpisodios"></div>
+                    </div>
                     <div id="animeDescricao"></div>
                 </div>
-                <div class="anime-player-box">
+                <div class="anime-player-col">
                     <div id="container">
                         <video id="player" preload="auto" tabindex="0"></video>
                         <div id="floating-controls">
@@ -65,10 +71,10 @@
                     <div id="progressbar-normal">
                         <div id="progress-normal"></div>
                     </div>
-                    <aside class="anime-episodios-box">
+                    <div class="anime-episodios-box2">
                         <h2>Episódios</h2>
                         <ul id="episodiosList"></ul>
-                    </aside>
+                    </div>
                 </div>
             </div>
         </section>
