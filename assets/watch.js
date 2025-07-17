@@ -168,10 +168,31 @@ function iniciarPlayer(videos) {
             }
         }
     }
+    function showLoadingOverlay(idx, total) {
+        let overlay = document.getElementById('video-loading-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'video-loading-overlay';
+            overlay.innerHTML = `
+                <div class="loading-blur"></div>
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <div class="loading-text" id="loading-text"></div>
+                </div>
+            `;
+            container.appendChild(overlay);
+        }
+        overlay.style.display = 'flex';
+        document.getElementById('loading-text').textContent = `Carregando vídeo ${idx}/${total}...`;
+    }
+    function hideLoadingOverlay() {
+        const overlay = document.getElementById('video-loading-overlay');
+        if (overlay) overlay.style.display = 'none';
+    }
     function loadDurations(idx = 0) {
         if (idx >= videos.length) {
             totalDuration = durations.reduce((a, b) => a + b, 0);
-            loading.style.display = 'none';
+            hideLoadingOverlay();
             if (totalDuration > 0) {
                 loadVideo(0, 0);
             } else {
@@ -180,8 +201,7 @@ function iniciarPlayer(videos) {
             }
             return;
         }
-        loading.style.display = 'block';
-        loading.textContent = `Carregando vídeo ${idx + 1}/${videos.length}... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧`;
+        showLoadingOverlay(idx + 1, videos.length);
         const temp = document.createElement('video');
         temp.preload = 'metadata';
         temp.src = videos[idx];
