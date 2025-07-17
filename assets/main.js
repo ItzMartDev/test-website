@@ -1,21 +1,28 @@
 let animesOriginais = [];
 
-async function carregarAnimes() {
+async function carregarAnimes(retry = 0) {
     const grid = document.getElementById('animesGrid');
     const errorDiv = document.getElementById('animeError');
     if (errorDiv) errorDiv.style.display = 'none';
     try {
-        const res = await fetch('animes.json');
-        if (!res.ok) throw new Error('Erro ao buscar animes.json');
+        // Caminho relativo e cache busting para GitHub Pages
+        const res = await fetch('./animes.json?v=' + Date.now());
+        if (!res.ok) throw new Error('Erro ao buscar animes.json: ' + res.status);
         const animes = await res.json();
+        console.log('Animes carregados:', animes);
         animesOriginais = animes;
         preencherFiltroAno(animes);
         renderizarAnimes(animes);
     } catch (e) {
-        if (grid) grid.innerHTML = '';
-        if (errorDiv) {
-            errorDiv.style.display = 'block';
-            errorDiv.textContent = 'Erro ao carregar animes.';
+        console.error('Erro ao carregar animes:', e);
+        if (retry < 2) {
+            setTimeout(() => carregarAnimes(retry + 1), 1000); // tenta de novo
+        } else {
+            if (grid) grid.innerHTML = '';
+            if (errorDiv) {
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Erro ao carregar animes. Verifique se animes.json está publicado e acessível.';
+            }
         }
     }
 }

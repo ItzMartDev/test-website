@@ -17,7 +17,10 @@ async function carregarAnime() {
     const sinopseDiv = document.getElementById('animeSinopse');
     const epGrid = document.getElementById('episodiosGrid');
     try {
-        const res = await fetch('animes.json');
+        // Detecta o caminho base do site (útil para subdiretórios)
+        const base = window.location.pathname.replace(/\/[^\/]*$/, '/');
+        const fetchPath = base + 'animes.json';
+        const res = await fetch(fetchPath);
         if (!res.ok) throw new Error('Erro ao buscar animes.json');
         const animes = await res.json();
         const anime = animes.find(a => String(a.id) === String(id));
@@ -25,8 +28,14 @@ async function carregarAnime() {
             nomeDiv.innerHTML = '<p>Anime não encontrado.</p>';
             return;
         }
-        animeGlobal = anime;
-        capaImg.src = anime.capa;
+        animeGlobal = JSON.parse(JSON.stringify(anime)); // cópia para não alterar o original
+        // Corrige caminhos de capa e vídeos para funcionar em subdiretórios
+        function fixPath(p) {
+            if (!p) return p;
+            if (/^(https?:)?\//.test(p)) return p; // já é absoluto
+            return base + p.replace(/^\//, '');
+        }
+        capaImg.src = fixPath(anime.capa);
         capaImg.alt = `Capa de ${anime.nome}`;
         nomeDiv.textContent = anime.nome;
         anoDiv.textContent = `Ano: ${anime.ano || ''}`;
@@ -36,7 +45,12 @@ async function carregarAnime() {
         sinopseDiv.textContent = anime.sinopse || '';
         epGrid.innerHTML = '';
         epGrid.style.width = '100%';
-        anime.episodios.forEach(ep => {
+        // Corrige caminhos dos vídeos
+        animeGlobal.episodios.forEach(ep => {
+            ep.videos = (ep.videos || []).map(fixPath);
+        });
+        animeGlobal.capa = fixPath(anime.capa);
+        animeGlobal.episodios.forEach(ep => {
             const btn = document.createElement('button');
             btn.className = 'episodio-btn';
             btn.textContent = `EP${ep.numero}`;
