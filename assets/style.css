@@ -149,7 +149,27 @@ footer {
 #epInfo h2 { color: #4caf50; font-size: 1.5em; margin-bottom: 8px; }
 #epInfo p { color: #ccc; }
 /* Player CSS (copiado e adaptado do fornecido) */
-#container { width: 1280px; height: 720px; max-width: 100vw; max-height: 56.25vw; aspect-ratio: 16/9; margin: 30px auto; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.5); background: #000; display: flex; align-items: center; justify-content: center; }
+#container {
+    width: 1280px;
+    height: 720px;
+    max-width: 100vw;
+    max-height: 56.25vw;
+    aspect-ratio: 16/9;
+    margin: 30px auto;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+#player {
+    background: #000 !important;
+    z-index: 2;
+}
 video { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; margin: auto; cursor: pointer; }
 #floating-controls { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px; transform: translateY(100%); transition: transform 0.3s ease; z-index: 10; pointer-events: auto; }
 #floating-controls.show { transform: translateY(0); }
@@ -186,8 +206,11 @@ video { width: 100%; height: 100%; object-fit: contain; background: #000; displa
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 20;
+    z-index: 10;
     pointer-events: none;
+}
+#video-loading-overlay[style*="display: flex"] {
+    display: flex !important;
 }
 .loading-blur {
     position: absolute;
