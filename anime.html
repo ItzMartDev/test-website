@@ -4,38 +4,44 @@
     <meta charset="UTF-8">
     <title>Assistir Anime - FantasyAnime</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/logo.ico">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <div class="site-wrapper">
     <header>
-        <h1>FantasyAnime</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="quem-somos.html">Quem Somos</a>
-        </nav>
+        <div class="header-content">
+            <a href="index.html" class="header-logo-link"><img src="assets/logo.png" alt="Logo FantasyAnime" class="header-logo"></a>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="quem-somos.html">Quem Somos</a>
+            </nav>
+            <img src="assets/anime.png" alt="Anime" class="header-anime-img">
+        </div>
     </header>
     <main>
-        <button class="btn-voltar" onclick="window.location.href='index.html'">← Voltar para lista</button>
         <section id="anime-page">
-            <div class="anime-flex-layout2">
-                <div class="anime-info-box2">
-                    <img id="animeCapa" src="" alt="Capa do Anime">
-                    <h2 id="animeNome"></h2>
-                    <div class="anime-meta2">
-                        <div id="animeAno"></div>
-                        <div id="animeTipo"></div>
-                        <div id="animeEpisodios"></div>
+            <div class="anime-flex-layout3">
+                <div class="anime-info-col">
+                    <div class="anime-info-box2">
+                        <button class="btn-voltar" style="align-self: flex-start; margin-bottom: 10px;" onclick="window.location.href='index.html'">← Voltar para lista</button>
+                        <img id="animeCapa" src="" alt="Capa do Anime">
+                        <h2 id="animeNome"></h2>
+                        <div class="anime-meta2">
+                            <div id="animeAno"></div>
+                            <div id="animeTipo"></div>
+                            <div id="animeEpisodios"></div>
+                        </div>
+                        <div class="desc-title">Descrição:</div>
+                        <div id="animeDescricao"></div>
+                        <div class="sinopse-title">Sinopse:</div>
+                        <div id="animeSinopse"></div>
                     </div>
-                    <div class="desc-title">Descrição:</div>
-                    <div id="animeDescricao"></div>
-                    <div class="sinopse-title">Sinopse:</div>
-                    <div id="animeSinopse"></div>
                 </div>
                 <div class="anime-player-col">
                     <div id="container">
                         <video id="player" preload="auto" tabindex="0"></video>
-                        <div id="floating-controls">
+                        <div id="floating-controls" class="show">
                             <div id="progressbar"><div id="progress"></div></div>
                             <div id="controls-row">
                                 <div id="left-controls">
@@ -56,25 +62,8 @@
                         <div id="loading">Carregando vídeos... (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</div>
                         <div id="error">Erro ao carregar vídeos! (｡•́︿•̀｡)</div>
                     </div>
-                    <div id="normal-controls">
-                        <div id="normal-left-controls">
-                            <button class="control-btn" id="skipBackBtnNormal" title="Retroceder 5s">⏪</button>
-                            <button class="control-btn" id="playBtnNormal">▶</button>
-                            <button class="control-btn" id="skipForwardBtnNormal" title="Avançar 5s">⏩</button>
-                        </div>
-                        <div id="normal-center-controls">
-                            <div id="timeNormal">00:00 / 00:00</div>
-                        </div>
-                        <div id="normal-right-controls">
-                            <span id="volumeValueNormal">100%</span>
-                            <input type="range" id="volumeSliderNormal" min="0" max="200" value="100">
-                            <button class="control-btn" id="fullscreenBtnNormal" title="Tela cheia">⛶</button>
-                        </div>
-                    </div>
-                    <div id="progressbar-normal">
-                        <div id="progress-normal"></div>
-                    </div>
-                    <div class="anime-episodios-box2">
+                    <!-- Removido controles duplicados -->
+                    <div class="anime-episodios-box2" style="width:100%;max-width:1100px;margin:24px auto 0 auto;">
                         <h2>Episódios</h2>
                         <div id="episodiosGrid"></div>
                     </div>
@@ -82,10 +71,7 @@
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados. | <a href="quem-somos.html">Quem Somos</a></p>
-    </footer>
     </div>
     <script src="assets/anime.js"></script>
 </body>
-</html> 
+</html>

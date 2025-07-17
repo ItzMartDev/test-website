@@ -76,27 +76,17 @@ function iniciarPlayer(videos) {
     const player = document.getElementById('player');
     const container = document.getElementById('container');
     const floatingControls = document.getElementById('floating-controls');
-    const normalControls = document.getElementById('normal-controls');
     const progressbar = document.getElementById('progressbar');
-    const progressbarNormal = document.getElementById('progressbar-normal');
     const progress = document.getElementById('progress');
-    const progressNormal = document.getElementById('progress-normal');
     const time = document.getElementById('time');
-    const timeNormal = document.getElementById('timeNormal');
     const playBtn = document.getElementById('playBtn');
-    const playBtnNormal = document.getElementById('playBtnNormal');
     const volumeSlider = document.getElementById('volumeSlider');
-    const volumeSliderNormal = document.getElementById('volumeSliderNormal');
     const volumeValue = document.getElementById('volumeValue');
-    const volumeValueNormal = document.getElementById('volumeValueNormal');
     const loading = document.getElementById('loading');
     const error = document.getElementById('error');
     const skipBackBtn = document.getElementById('skipBackBtn');
     const skipForwardBtn = document.getElementById('skipForwardBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const skipBackBtnNormal = document.getElementById('skipBackBtnNormal');
-    const skipForwardBtnNormal = document.getElementById('skipForwardBtnNormal');
-    const fullscreenBtnNormal = document.getElementById('fullscreenBtnNormal');
 
     let durations = Array(videos.length).fill(0);
     let totalDuration = 0;
@@ -104,6 +94,7 @@ function iniciarPlayer(videos) {
     let isPlaying = false;
     let mouseTimer = null;
     let isFullscreen = false;
+    let controlsVisible = true;
     let isLoading = false;
     let playbackRate = 1;
     player.volume = 1;
@@ -132,16 +123,14 @@ function iniciarPlayer(videos) {
         volumeSlider.value = this.value;
     });
     function showControls() {
-        if (isFullscreen) {
-            floatingControls.classList.add('show');
-            container.style.cursor = 'default';
-        }
+        floatingControls.classList.add('show');
+        container.style.cursor = 'default';
+        controlsVisible = true;
     }
     function hideControls() {
-        if (isFullscreen) {
-            floatingControls.classList.remove('show');
-            container.style.cursor = 'none';
-        }
+        floatingControls.classList.remove('show');
+        container.style.cursor = 'none';
+        controlsVisible = false;
     }
     function resetMouseTimer() {
         clearTimeout(mouseTimer);
@@ -154,6 +143,9 @@ function iniciarPlayer(videos) {
         clearTimeout(mouseTimer);
         hideControls();
     });
+    // Mostra controles ao focar no player por teclado
+    player.addEventListener('focus', showControls);
+    player.addEventListener('blur', hideControls);
     function skipTime(seconds) {
         if (isLoading) return;
         let played = 0;
@@ -176,15 +168,9 @@ function iniciarPlayer(videos) {
     function onFullscreenChange() {
         isFullscreen = !!document.fullscreenElement;
         if (isFullscreen) {
-            normalControls.style.display = 'none';
-            progressbarNormal.style.display = 'none';
             resetMouseTimer();
         } else {
-            normalControls.style.display = 'flex';
-            progressbarNormal.style.display = 'block';
-            floatingControls.classList.remove('show');
-            container.style.cursor = 'default';
-            clearTimeout(mouseTimer);
+            resetMouseTimer();
         }
     }
     document.addEventListener('fullscreenchange', onFullscreenChange);

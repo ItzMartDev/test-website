@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <title>FantasyAnime - Streaming de Animes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/logo.ico">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <div class="site-wrapper">
     <header>
-        <h1>FantasyAnime</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="quem-somos.html">Quem Somos</a>
-        </nav>
+        <div class="header-content">
+            <a href="index.html" class="header-logo-link"><img src="assets/logo.png" alt="Logo FantasyAnime" class="header-logo"></a>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="quem-somos.html">Quem Somos</a>
+            </nav>
+            <img src="assets/anime.png" alt="Anime" class="header-anime-img">
+        </div>
     </header>
     <main>
         <section id="search-section">
@@ -29,13 +33,11 @@
         </section>
         <section id="anime-list">
             <h2>Animes em Destaque</h2>
+            <div id="animeError" style="display:none;">Erro ao carregar animes.</div>
             <div class="animes-grid" id="animesGrid"></div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 FantasyAnime. Todos os direitos reservados. | <a href="quem-somos.html">Quem Somos</a></p>
-    </footer>
     </div>
     <script src="assets/main.js"></script>
 </body>
-</html> 
+</html>
